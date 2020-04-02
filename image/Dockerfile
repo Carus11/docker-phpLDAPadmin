@@ -39,6 +39,10 @@ RUN /container/tool/install-service
 # Add default env variables
 ADD environment /container/environment/99-default
 
+ENV PHP_SESSION_SAVE_PATH=/var/lib/php/sessions
+
+RUN sed -i 's/\;session.save_path = "\/var\/lib\/php\/sessions"/session.save_path=${PHP_SESSION_SAVE_PATH}/g' /etc/php/7.3/fpm/php.ini
+
 # Set phpLDAPadmin data directory in a data volume
 VOLUME ["/var/www/phpldapadmin"]
 
